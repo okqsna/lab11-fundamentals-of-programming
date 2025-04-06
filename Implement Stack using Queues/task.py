@@ -78,7 +78,6 @@ class MyStack(object):
         :param x: element to be added
         """
         self.queue_final.push(x)
-        self.queue_one.push(x)
 
         for _ in range(1, len(self.queue_one) + 1):
             el_one = self.queue_one.pop()
@@ -120,4 +119,3 @@ class MyStack(object):
 # mystack.push(1)
 # print(mystack.pop())
 # print(mystack.empty())
-
