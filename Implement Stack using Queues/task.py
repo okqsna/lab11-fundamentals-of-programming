@@ -69,33 +69,41 @@ class MyStack(object):
         """
         Initializes an empty stack using two queues.
         """
-        pass
+        self.queue_one = Queue()
+        self.queue_final = Queue()
 
     def push(self, x):
         """
         Adding element to stack
         :param x: element to be added
         """
-        pass
+        self.queue_final.push(x)
+        self.queue_one.push(x)
+
+        for _ in range(1, len(self.queue_one) + 1):
+            el_one = self.queue_one.pop()
+            self.queue_final.push(el_one)
+
+        self.queue_one, self.queue_final = self.queue_final, self.queue_one
 
     def pop(self):
         """
         Removing element from stack
         """
-        pass
+        return self.queue_one.pop()
 
     def top(self):
         """
         :rtype: int
         """
-        pass
+        return self.queue_one.peek()
+
 
     def empty(self):
         """
         :rtype: bool
         """
-        pass
-
+        return self.queue_one.empty()
 
 # leetcode test
 
@@ -105,3 +113,11 @@ class MyStack(object):
 # print(mystack.top())
 # print(mystack.pop())
 # print(mystack.empty())
+
+# leetcode test
+
+# mystack = MyStack()
+# mystack.push(1)
+# print(mystack.pop())
+# print(mystack.empty())
+
