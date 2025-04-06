@@ -12,7 +12,7 @@ class Queue:
         """
         self.queue = []
 
-    def push(self, x):
+    def add(self, x):
         """
         Adding element to queue
         :param x: element to be added
@@ -77,11 +77,11 @@ class MyStack(object):
         Adding element to stack
         :param x: element to be added
         """
-        self.queue_final.push(x)
+        self.queue_final.add(x)
 
         for _ in range(1, len(self.queue_one) + 1):
             el_one = self.queue_one.pop()
-            self.queue_final.push(el_one)
+            self.queue_final.add(el_one)
 
         self.queue_one, self.queue_final = self.queue_final, self.queue_one
 
