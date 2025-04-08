@@ -2,62 +2,6 @@
 Design a stack-like data structure to push elements
 to the stack and pop the most frequent element from the stack.
 """
-class Queue:
-    """
-    Data structure queue.
-    """
-    def __init__(self):
-        """
-        Data initiializer for queue
-        """
-        self.queue = []
-
-    def add(self, x):
-        """
-        Adding element to queue
-        :param x: element to be added
-        """
-        self.queue.append(x)
-
-    def peek(self):
-        """
-        Returns the top item of the queue.
-
-        :return: The top item of the stack.
-        """
-        if self.queue:
-            return self.queue[0]
-
-    def pop(self):
-        """
-        Removing element from queue
-        """
-        if not self.queue:
-            return None
-        return self.queue.pop(0)
-
-    def __len__(self):
-        """
-        Getting length of queue
-        :return: int,  length of queue
-        """
-        return len(self.queue)
-
-    def empty(self):
-        """
-        Checking if queue is empty
-
-        :return: bool, empty of full
-        """
-        return len(self.queue) == 0
-
-    def __str__(self):
-        """
-        Returns a string representation of the queue.
-
-        :return: A string representing the queue.
-        """
-        return str(self.queue)
 
 class Stack:
     """
@@ -70,7 +14,7 @@ class Stack:
         """
         self.__index = []
 
-    def __len__(self) -> int:
+    def __len__(self):
         """
         Returns the number of elements in the stack.
 
@@ -106,7 +50,7 @@ class Stack:
             raise ValueError('Stack is empty')
         return self.__index.pop()
 
-    def __str__(self)-> str:
+    def __str__(self):
         """
         Returns a string representation of the stack.
 
@@ -121,39 +65,36 @@ class FreqStack(object):
     """
 
     def __init__(self):
-        self.freqstack = Queue()
+        self.freqstack = Stack()
+        self.all_el = {}
+        self.all_curr_stacks = {}
 
     def push(self, val):
         """
         :type val: int
         :rtype: None
         """
-        self.freqstack.add(val)
+        self.freqstack.push(val)
+        if val not in self.all_el:
+            self.all_el.setdefault(val, 1)
+        else:
+            self.all_el[val] += 1
+        
 
     def pop(self):
         """
         :rtype: int
         """
-        all_dict = {}
-        queue_second = Queue()
+        all_dict = self.all_el
+        el = self.freqstack.pop()
 
-        while self.freqstack:
-            el = self.freqstack.pop()
-            queue_second.add(el)
-            all_dict.setdefault(el, 0)
-            if el in all_dict:
-                all_dict[el] += 1
-        print(all_dict)
-        curr_val = 0
-        curr_key = None
+        curr_key = 0
         for key, val in all_dict.items():
-            if curr_val < val:
-                curr_val = val
+            if all_dict[el] >= val:
+                curr_key = el
+            else:
                 curr_key = key
-
-        all_dict.pop(curr_key)
-        for key in all_dict:
-            self.freqstack.add(key)
+        all_dict[curr_key] -= 1
         return curr_key
 
 
@@ -181,4 +122,5 @@ print(freqStack.freqstack)
 print(freqStack.pop())
 print(freqStack.pop())
 print(freqStack.pop())
+print(freqStack.freqstack)
 print(freqStack.pop())
