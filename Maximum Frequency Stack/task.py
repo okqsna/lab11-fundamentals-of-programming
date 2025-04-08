@@ -12,7 +12,7 @@ class Queue:
         """
         self.queue = []
 
-    def push(self, x):
+    def add(self, x):
         """
         Adding element to queue
         :param x: element to be added
@@ -121,17 +121,64 @@ class FreqStack(object):
     """
 
     def __init__(self):
-        pass
+        self.freqstack = Queue()
 
     def push(self, val):
         """
         :type val: int
         :rtype: None
         """
-        pass
+        self.freqstack.add(val)
 
     def pop(self):
         """
         :rtype: int
         """
-        pass
+        all_dict = {}
+        queue_second = Queue()
+
+        while self.freqstack:
+            el = self.freqstack.pop()
+            queue_second.add(el)
+            all_dict.setdefault(el, 0)
+            if el in all_dict:
+                all_dict[el] += 1
+        print(all_dict)
+        curr_val = 0
+        curr_key = None
+        for key, val in all_dict.items():
+            if curr_val < val:
+                curr_val = val
+                curr_key = key
+
+        all_dict.pop(curr_key)
+        for key in all_dict:
+            self.freqstack.add(key)
+        return curr_key
+
+
+#leetcode tests
+# FreqStack freqStack = new FreqStack();
+# freqStack.push(5); // The stack is [5]
+# freqStack.push(7); // The stack is [5,7]
+# freqStack.push(5); // The stack is [5,7,5]
+# freqStack.push(7); // The stack is [5,7,5,7]
+# freqStack.push(4); // The stack is [5,7,5,7,4]
+# freqStack.push(5); // The stack is [5,7,5,7,4,5]
+# freqStack.pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,5,7,4].
+# freqStack.pop();   // return 7, as 5 and 7 is the most frequent, but 7 is closest to the top. The stack becomes [5,7,5,4].
+# freqStack.pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,4].
+# freqStack.pop();   // return 4, as 4, 5 and 7 is the most frequent, but 4 is closest to the top. The stack becomes [5,7].
+
+freqStack = FreqStack()
+freqStack.push(5)
+freqStack.push(7)
+freqStack.push(5)
+freqStack.push(7)
+freqStack.push(4)
+freqStack.push(5)
+print(freqStack.freqstack)
+print(freqStack.pop())
+print(freqStack.pop())
+print(freqStack.pop())
+print(freqStack.pop())
