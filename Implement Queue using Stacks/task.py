@@ -13,7 +13,7 @@ class Stack:
         """
         self.__index = []
 
-    def __len__(self) -> int:
+    def __len__(self):
         """
         Returns the number of elements in the stack.
 
@@ -49,7 +49,7 @@ class Stack:
             raise ValueError('Stack is empty')
         return self.__index.pop()
 
-    def __str__(self)-> str:
+    def __str__(self):
         """
         Returns a string representation of the stack.
 
@@ -70,7 +70,7 @@ class MyQueue:
         self.stack_one = Stack()
         self.stack_final = Stack()
 
-    def push(self, x):
+    def add(self, x):
         """
         Adds an element to the end of the queue.
 
@@ -105,7 +105,7 @@ class MyQueue:
 
         return self.stack_final.peek()
 
-    def empty(self) -> bool:
+    def empty(self):
         """
         Checks if the queue is empty.
 
