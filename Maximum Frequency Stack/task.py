@@ -2,7 +2,6 @@
 Design a stack-like data structure to push elements
 to the stack and pop the most frequent element from the stack.
 """
-
 class Stack:
     """
     Data structure stack.
@@ -61,13 +60,13 @@ class Stack:
 
 class FreqStack(object):
     """
-    Frequency stack implementation
+    Frequency stack implementation that pops the most frequent element.
     """
-
     def __init__(self):
         self.freqstack = Stack()
-        self.all_el = {}
-        self.all_curr_stacks = {}
+        self.freq_map = {}
+        self.stack_map = {}
+        self.curr_freq_max = 0
 
     def push(self, val):
         """
@@ -75,28 +74,31 @@ class FreqStack(object):
         :rtype: None
         """
         self.freqstack.push(val)
-        if val not in self.all_el:
-            self.all_el.setdefault(val, 1)
+
+        if val not in self.freq_map:
+            self.freq_map.setdefault(val, 1)
         else:
-            self.all_el[val] += 1
-        
+            self.freq_map[val] += 1
+
+        curr_freq = self.freq_map[val]
+        if curr_freq > self.curr_freq_max:
+            self.curr_freq_max = curr_freq
+
+        if curr_freq not in self.stack_map:
+            self.stack_map.setdefault(curr_freq, Stack())
+        self.stack_map[curr_freq].push(val)
 
     def pop(self):
         """
         :rtype: int
         """
-        all_dict = self.all_el
-        el = self.freqstack.pop()
+        el = self.stack_map[self.curr_freq_max].pop()
+        self.freq_map[el] -= 1
 
-        curr_key = 0
-        for key, val in all_dict.items():
-            if all_dict[el] >= val:
-                curr_key = el
-            else:
-                curr_key = key
-        all_dict[curr_key] -= 1
-        return curr_key
+        if not self.stack_map[self.curr_freq_max]:
+            self.curr_freq_max -= 1
 
+        return el
 
 #leetcode tests
 # FreqStack freqStack = new FreqStack();
@@ -111,16 +113,16 @@ class FreqStack(object):
 # freqStack.pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,4].
 # freqStack.pop();   // return 4, as 4, 5 and 7 is the most frequent, but 4 is closest to the top. The stack becomes [5,7].
 
-freqStack = FreqStack()
-freqStack.push(5)
-freqStack.push(7)
-freqStack.push(5)
-freqStack.push(7)
-freqStack.push(4)
-freqStack.push(5)
-print(freqStack.freqstack)
-print(freqStack.pop())
-print(freqStack.pop())
-print(freqStack.pop())
-print(freqStack.freqstack)
-print(freqStack.pop())
+# freqStack = FreqStack()
+# freqStack.push(5)
+# freqStack.push(7)
+# freqStack.push(5)
+# freqStack.push(7)
+# freqStack.push(4)
+# freqStack.push(5)
+# print(freqStack.freqstack)
+# print(freqStack.pop())
+# print(freqStack.pop())
+# print(freqStack.pop())
+# print(freqStack.freqstack)
+# print(freqStack.pop())
