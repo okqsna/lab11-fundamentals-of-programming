@@ -92,7 +92,8 @@ class FreqStack(object):
         """
         :rtype: int
         """
-        el = self.stack_map[self.curr_freq_max].pop()
+        most_frequent = self.curr_freq_max
+        el = self.stack_map[most_frequent].pop()
         self.freq_map[el] -= 1
 
         if not self.stack_map[self.curr_freq_max]:
